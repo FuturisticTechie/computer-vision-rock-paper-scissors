@@ -22,11 +22,13 @@ def get_prediction():
         # Press q to close the window
         print(prediction)
 
-        user_choice = np.array(prediction)
-        if np.any(user_choice) >= 0.8:
-            return get_user_choice(prediction)
-            break
-
+        user_choice = np.argmax(prediction)
+        print(user_choice)
+        
+        
+        # print(get_user_choice(prediction))
+            # break
+            
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
                 
@@ -36,16 +38,24 @@ def get_prediction():
     cv2.destroyAllWindows()
 
 
-def get_user_choice(prediction):
-    user_choice = np.array(prediction)
-    if user_choice[0] >= 0.8:
+def get_user_choice(user_choice):
+    if user_choice == 0:
         print("User choice is rock")
-    if user_choice[1] >= 0.8:
+    if user_choice == 1:
         print("User choice is paper")
-    if user_choice[2] >= 0.8:
+    if user_choice == 2:
         print("User choice is scissors")
-    if user_choice[3] >= 0.8:
+    if user_choice == 3:
         print("There is no user choice detected")
+    # user_choice = np.array(prediction)
+    # if user_choice[0] >= 0.8:
+    #     print("User choice is rock")
+    # if user_choice[1] >= 0.8:
+    #     print("User choice is paper")
+    # if user_choice[2] >= 0.8:
+    #     print("User choice is scissors")
+    # if user_choice[3] >= 0.8:
+    #     print("There is no user choice detected")
 
     return get_prediction()
 
@@ -64,7 +74,7 @@ def get_winner(comp_choice, user_choice):                                  #Func
         print("You win!")
 
 def play():                                                                 #Final fucntion wrapping previous fucntions togther- functions are assigned the variables as per get_winner arguments
-    user_choice = get_user_choice()
+    user_choice = get_user_choice(user_choice)
     comp_choice = get_computer_choice()
     winner = get_winner(comp_choice, user_choice)
 
