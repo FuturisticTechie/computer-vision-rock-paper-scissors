@@ -40,7 +40,11 @@ def get_computer_choice():
     return comp_choice
 
 def get_winner(comp_choice, user_choice):                                  #Function with rules of rock paper scissors
-    if comp_choice == user_choice:
+    if comp_choice == 'rock' and user_choice =='rock':
+        print("It's a tie!")
+    elif comp_choice == 'paper' and user_choice =='paper':
+        print("It's a tie!")
+    elif comp_choice == 'scissors' and user_choice =='scissors':
         print("It's a tie!")
     elif comp_choice == 'rock' and user_choice == 'scissors':
         print("You lost!")
@@ -61,8 +65,8 @@ def play():                                                                 #Fin
     comp_choice = get_computer_choice()
     winner = get_winner(comp_choice, user_choice)
 
-# play()
+play()
 
 
     
-print(get_prediction())
+# print(get_prediction())

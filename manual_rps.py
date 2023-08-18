@@ -22,7 +22,11 @@ def get_computer_choice():
     return comp_choice
 
 def get_winner(comp_choice, user_choice):                                  #Function with rules of rock paper scissors
-    if comp_choice == user_choice:
+    if comp_choice == 'rock' and user_choice =='rock':
+        print("It's a tie!")
+    elif comp_choice == 'paper' and user_choice =='paper':
+        print("It's a tie!")
+    elif comp_choice == 'scissors' and user_choice =='scissors':
         print("It's a tie!")
     elif comp_choice == 'rock' and user_choice == 'scissors':
         print("You lost!")
@@ -45,8 +49,3 @@ def play():                                                                 #Fin
 
 play()
 
-
-# ou received the following feedback for this task:
-# Something went wrong when running the function `get_computer_choice`. Make sure you have defined the function correctly 
-# in the manual_rps.py file and that it does not accept any parameter. Also, make sure that the list of options
-# is defined inside the function.
