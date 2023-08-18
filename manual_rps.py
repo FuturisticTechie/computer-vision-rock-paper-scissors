@@ -16,7 +16,7 @@ def get_user_choice():
     return user_choice
 
 def get_computer_choice():
-    choice_list = ['rock', 'paper', 'scissors']                             #While this code was working well when the choice_list was outside the function as a globla variable, based on feedback I placed it insie the function here and again in get_user_choice
+    choice_list = ['rock', 'paper', 'scissors']                             #While this code was working well when the choice_list was outside the function as a globla variable, based on feedback I placed it insie the function here and again in get_user_choice which is not taking any parameters
     comp_choice = random.choice(choice_list)
     print(f'Computer choice is {comp_choice}')
     return comp_choice
