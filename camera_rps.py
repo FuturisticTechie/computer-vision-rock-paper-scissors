@@ -21,6 +21,12 @@ def get_prediction():
         cv2.imshow('frame', frame)
         # Press q to close the window
         print(prediction)
+
+        user_choice = np.array(prediction)
+        if np.any(user_choice) >= 0.8:
+            return get_user_choice(prediction)
+            break
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
                 
@@ -30,7 +36,17 @@ def get_prediction():
     cv2.destroyAllWindows()
 
 
-def get_user_choice():   
+def get_user_choice(prediction):
+    user_choice = np.array(prediction)
+    if user_choice[0] >= 0.8:
+        print("User choice is rock")
+    if user_choice[1] >= 0.8:
+        print("User choice is paper")
+    if user_choice[2] >= 0.8:
+        print("User choice is scissors")
+    if user_choice[3] >= 0.8:
+        print("There is no user choice detected")
+
     return get_prediction()
 
 def get_computer_choice():
