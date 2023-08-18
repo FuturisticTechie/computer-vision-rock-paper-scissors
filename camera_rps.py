@@ -11,10 +11,11 @@ def get_prediction():
     cap = cv2.VideoCapture(0)
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
     num_predictions = 0
-    start_time = time.time()                            #Records start time
-    elapsed_time = 0
+    # start_time = time.time()                            #Records start time
+    # elapsed_time = 0
 
-    while num_predictions < 1:
+
+    while num_predictions < 3:
         ret, frame = cap.read()
         resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
         image_np = np.array(resized_frame)
@@ -25,16 +26,32 @@ def get_prediction():
         # Press q to close the window
         print(prediction)
 
-        current_time = time.time()                      #Records current time
-        elapsed_time = current_time - start_time      #Calculates elapsed time from start of function to this point
+        # current_time = time.time()                      #Records current time
+        # elapsed_time = current_time - start_time      #Calculates elapsed time from start of function to this point
 
-        if elapsed_time < 3:                            #Counts down from 3 to 1
-            print(f"Countdown: {int(3 - elapsed_time)} seconds")
-        else:
-            user_choice = np.argmax(prediction)
-            print(user_choice)
-        
+        # if elapsed_time < 10:                            #Counts down from 3 to 1
+        #     print(f"Countdown: {int(10 - elapsed_time)} seconds")
+
+        number = 3
+        print("Countdown begins")
+        while True:
+            print(number)
+            number -= 1
+            if number == 0:   
+                user_choice = np.argmax(prediction)
+                print(user_choice)
+                break
+            
         num_predictions += 1
+
+        # number = 3
+        # print("Countdown!") 
+        # while True: 
+        #     print(number) 
+        #     number = number - 1 
+        #     if number <= 0: 
+        #       break 
+        #     print(user_choice)
         
         # print(get_user_choice(prediction))
             # break
