@@ -20,26 +20,14 @@ def get_computer_choice():
     comp_choice = random.choice(choice_list)
     print(f'Computer choice is {comp_choice}')
     return comp_choice
-
+                                #Function with rules of rock paper scissors
 def get_winner(comp_choice, user_choice):                                  #Function with rules of rock paper scissors
-    if comp_choice == 'rock' and user_choice =='rock':
+    if comp_choice == user_choice =='rock':
         print("It's a tie!")
-    elif comp_choice == 'paper' and user_choice =='paper':
-        print("It's a tie!")
-    elif comp_choice == 'scissors' and user_choice =='scissors':
-        print("It's a tie!")
-    elif comp_choice == 'rock' and user_choice == 'scissors':
+    elif (comp_choice == 'rock' and user_choice) == 'scissors' or (comp_choice == 'paper' and user_choice == 'rock') or (comp_choice == 'scissors' and user_choice == 'paper'):
         print("You lost!")
-    elif comp_choice == 'rock' and user_choice == 'paper':
+    elif (comp_choice == 'rock' and user_choice == 'paper') or (comp_choice == 'paper' and user_choice == 'scissors') or (comp_choice == 'scissors' and user_choice == 'rock'):
         print("You win!")
-    elif comp_choice == 'paper' and user_choice == 'scissors':
-        print("You win!")   
-    elif comp_choice == 'paper' and user_choice == 'rock':
-        print("You lost!")
-    elif comp_choice == 'scissors' and user_choice == 'rock':
-        print("You win!")
-    elif comp_choice == 'scissors' and user_choice == 'paper':
-        print("You lost!")
 
 
 def play():                                                                 #Final fucntion wrapping previous fucntions togther- functions are assigned the variables as per get_winner arguments

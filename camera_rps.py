@@ -31,7 +31,7 @@ def get_prediction():
 
 
 def get_user_choice():   
-    return get_prediction
+    return get_prediction()
 
 def get_computer_choice():
     choice_list = ['rock', 'paper', 'scissors']                             #While this code was working well when the choice_list was outside the function as a globla variable, based on feedback I placed it insie the function here and again in get_user_choice which is not taking any parameters
@@ -40,30 +40,24 @@ def get_computer_choice():
     return comp_choice
 
 def get_winner(comp_choice, user_choice):                                  #Function with rules of rock paper scissors
-    if comp_choice == 'rock' and user_choice =='rock':
+    if comp_choice == user_choice =='rock':
         print("It's a tie!")
-    elif comp_choice == 'paper' and user_choice =='paper':
-        print("It's a tie!")
-    elif comp_choice == 'scissors' and user_choice =='scissors':
-        print("It's a tie!")
-    elif comp_choice == 'rock' and user_choice == 'scissors':
+    elif (comp_choice == 'rock' and user_choice) == 'scissors' or (comp_choice == 'paper' and user_choice == 'rock') or (comp_choice == 'scissors' and user_choice == 'paper'):
         print("You lost!")
-    elif comp_choice == 'rock' and user_choice == 'paper':
+    elif (comp_choice == 'rock' and user_choice == 'paper') or (comp_choice == 'paper' and user_choice == 'scissors') or (comp_choice == 'scissors' and user_choice == 'rock'):
         print("You win!")
-    elif comp_choice == 'paper' and user_choice == 'scissors':
-        print("You win!")   
-    elif comp_choice == 'paper' and user_choice == 'rock':
-        print("You lost!")
-    elif comp_choice == 'scissors' and user_choice == 'rock':
-        print("You win!")
-    elif comp_choice == 'scissors' and user_choice == 'paper':
-        print("You lost!")
-
 
 def play():                                                                 #Final fucntion wrapping previous fucntions togther- functions are assigned the variables as per get_winner arguments
     user_choice = get_user_choice()
     comp_choice = get_computer_choice()
     winner = get_winner(comp_choice, user_choice)
+
+
+start = time.time()
+get_prediction()
+end = time.time()
+print(end - start)
+
 
 play()
 
