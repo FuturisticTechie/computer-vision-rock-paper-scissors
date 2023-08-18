@@ -26,7 +26,7 @@ def get_winner(comp_choice, user_choice):                                  #Func
         print("It's a tie!")
     elif (comp_choice == 'rock' and user_choice) == 'scissors' or (comp_choice == 'paper' and user_choice == 'rock') or (comp_choice == 'scissors' and user_choice == 'paper'):
         print("You lost!")
-    elif (comp_choice == 'rock' and user_choice == 'paper') or (comp_choice == 'paper' and user_choice == 'scissors') or (comp_choice == 'scissors' and user_choice == 'rock'):
+    else:
         print("You win!")
 
 

@@ -10,8 +10,11 @@ def get_prediction():
     model = load_model('keras_model.h5')
     cap = cv2.VideoCapture(0)
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+    num_predictions = 0
+    start_time = time.time()                            #Records start time
+    elapsed_time = 0
 
-    while True: 
+    while num_predictions < 1:
         ret, frame = cap.read()
         resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
         image_np = np.array(resized_frame)
@@ -22,9 +25,16 @@ def get_prediction():
         # Press q to close the window
         print(prediction)
 
-        user_choice = np.argmax(prediction)
-        print(user_choice)
+        current_time = time.time()                      #Records current time
+        elapsed_time = current_time - start_time      #Calculates elapsed time from start of function to this point
+
+        if elapsed_time < 3:                            #Counts down from 3 to 1
+            print(f"Countdown: {int(3 - elapsed_time)} seconds")
+        else:
+            user_choice = np.argmax(prediction)
+            print(user_choice)
         
+        num_predictions += 1
         
         # print(get_user_choice(prediction))
             # break
@@ -37,25 +47,21 @@ def get_prediction():
     # Destroy all the windows
     cv2.destroyAllWindows()
 
+    # return user_choice
 
-def get_user_choice(user_choice):
+
+def get_user_choice():
+    user_choice = get_prediction()
     if user_choice == 0:
-        print("User choice is rock")
+        print("You chose rock!")
     if user_choice == 1:
-        print("User choice is paper")
+        print("You chose paper!")
     if user_choice == 2:
-        print("User choice is scissors")
+        print("You chose scissors!")
     if user_choice == 3:
         print("There is no user choice detected")
-    # user_choice = np.array(prediction)
-    # if user_choice[0] >= 0.8:
-    #     print("User choice is rock")
-    # if user_choice[1] >= 0.8:
-    #     print("User choice is paper")
-    # if user_choice[2] >= 0.8:
-    #     print("User choice is scissors")
-    # if user_choice[3] >= 0.8:
-    #     print("There is no user choice detected")
+    # return user_choice
+
 
     return get_prediction()
 
@@ -68,25 +74,25 @@ def get_computer_choice():
 def get_winner(comp_choice, user_choice):                                  #Function with rules of rock paper scissors
     if comp_choice == user_choice =='rock':
         print("It's a tie!")
-    elif (comp_choice == 'rock' and user_choice) == 'scissors' or (comp_choice == 'paper' and user_choice == 'rock') or (comp_choice == 'scissors' and user_choice == 'paper'):
+    elif (comp_choice == 'rock' and user_choice == 2) or (comp_choice == 'paper' and user_choice == 0) or (comp_choice == 'scissors' and user_choice == 1):
         print("You lost!")
-    elif (comp_choice == 'rock' and user_choice == 'paper') or (comp_choice == 'paper' and user_choice == 'scissors') or (comp_choice == 'scissors' and user_choice == 'rock'):
+    else:
         print("You win!")
 
 def play():                                                                 #Final fucntion wrapping previous fucntions togther- functions are assigned the variables as per get_winner arguments
-    user_choice = get_user_choice(user_choice)
+    user_choice = get_user_choice()
     comp_choice = get_computer_choice()
-    winner = get_winner(comp_choice, user_choice)
+    get_winner(comp_choice, user_choice)
 
 
-start = time.time()
-get_prediction()
-end = time.time()
-print(end - start)
-
+# start = time.time()
+# get_prediction()
+# end = time.time()
+# print(f"time taken to run get_predection function is {end - start}")
 
 play()
 
-
     
 # print(get_prediction())
+
+
