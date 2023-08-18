@@ -16,6 +16,8 @@ def get_prediction():
 
 
     while num_predictions < 3:
+        start_time = time.time()  
+        elapsed_time = time.time() + 5
         ret, frame = cap.read()
         resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
         image_np = np.array(resized_frame)
@@ -32,26 +34,17 @@ def get_prediction():
         # if elapsed_time < 10:                            #Counts down from 3 to 1
         #     print(f"Countdown: {int(10 - elapsed_time)} seconds")
 
-        number = 3
-        print("Countdown begins")
-        while True:
-            print(number)
-            number -= 1
-            if number == 0:   
-                user_choice = np.argmax(prediction)
-                print(user_choice)
-                break
+        # number = 3
+        # print("Countdown begins")
+        # while True:
+        #     print(number)
+        #     number -= 1
+        #     if number == 0:   
+        #         user_choice = np.argmax(prediction)
+        #         print(user_choice)
+        #         break
             
         num_predictions += 1
-
-        # number = 3
-        # print("Countdown!") 
-        # while True: 
-        #     print(number) 
-        #     number = number - 1 
-        #     if number <= 0: 
-        #       break 
-        #     print(user_choice)
         
         # print(get_user_choice(prediction))
             # break
