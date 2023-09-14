@@ -24,9 +24,3 @@ cap.release()
 # Destroy all the windows
 cv2.destroyAllWindows()
 
-
-user_choice = np.array(prediction)
-print(user_choice[0])
-print(user_choice[1])
-print(user_choice[2])
-print(user_choice[3])

@@ -1,108 +1,81 @@
-
-
 import cv2
 from keras.models import load_model
 import numpy as np
-import random 
-import time
+import random
 
-def get_prediction():
+def countdown_timer(seconds):
+    print("Show your hand in...")
+    while seconds > 0:
+        cv2.waitKey(1000)  # Wait for 1 second (1000ms)
+        print(seconds)
+        seconds -= 1       #To create countdown
+
+def get_prediction(model, cap):
+    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+    ret, frame = cap.read()
+    resized_frame = cv2.resize(frame, (224, 224), interpolation=cv2.INTER_AREA)
+    image_np = np.array(resized_frame)
+    normalized_image = (image_np.astype(np.float32) / 127.0) - 1  # Normalize the image
+    data[0] = normalized_image
+    prediction = model.predict(data)
+    cv2.imshow('frame', frame)
+    print(prediction)               #Helps visualise numpy array
+    return prediction
+
+def get_winner(comp_choice, user_choice):
+    choices = ['rock', 'paper', 'scissors']
+    print(f"Computer chose {choices[comp_choice]}.")        #Returns the index of the np.argmax(prediction) 
+    print(f"You chose {choices[user_choice]}.")             #Returns the index of the random.randint(0, 2) 
+
+    if comp_choice == user_choice:
+        return "It's a tie!"
+    elif (comp_choice == 0 and user_choice == 2) or (comp_choice == 1 and user_choice == 0) or (comp_choice == 2 and user_choice == 1):
+        return "Computer wins!"
+    else:
+        return "You win!"
+
+def play_game():
     model = load_model('keras_model.h5')
     cap = cv2.VideoCapture(0)
-    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-    num_predictions = 0
-    # start_time = time.time()                            #Records start time
-    # elapsed_time = 0
 
+    player_score = 0
+    computer_score = 0
+    rounds_played = 0
 
-    while num_predictions < 3:
-        start_time = time.time()  
-        elapsed_time = time.time() + 5
-        ret, frame = cap.read()
-        resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
-        image_np = np.array(resized_frame)
-        normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
-        data[0] = normalized_image
-        prediction = model.predict(data)
-        cv2.imshow('frame', frame)
-        # Press q to close the window
-        print(prediction)
+    while True:
+        countdown_timer(3)  # Start a 3-second countdown
+        prediction = get_prediction(model, cap)
 
-        # current_time = time.time()                      #Records current time
-        # elapsed_time = current_time - start_time      #Calculates elapsed time from start of function to this point
+        user_choice = np.argmax(prediction)  # Determine user choice based on prediction
+        #print("User choice:", user_choice)
 
-        # if elapsed_time < 10:                            #Counts down from 3 to 1
-        #     print(f"Countdown: {int(10 - elapsed_time)} seconds")
+        comp_choice = random.randint(0, 2)  # Randomly generate computer choice (0 for rock, 1 for paper, 2 for scissors)
+        #print("Computer choice:", comp_choice)
 
-        # number = 3
-        # print("Countdown begins")
-        # while True:
-        #     print(number)
-        #     number -= 1
-        #     if number == 0:   
-        #         user_choice = np.argmax(prediction)
-        #         print(user_choice)
-        #         break
-            
-        num_predictions += 1
-        
-        # print(get_user_choice(prediction))
-            # break
-            
+        result = get_winner(comp_choice, user_choice)
+        print(result)
+
+        if "You win" in result:
+            player_score += 1
+        elif "Computer wins" in result:
+            computer_score += 1
+
+        rounds_played += 1
+
+        print(f"Player: {player_score} - Computer: {computer_score}\n")
+
+        if player_score >= 3 or computer_score >= 3:
+            if player_score > computer_score:
+                print("Player wins the game!")
+            else:
+                print("Computer wins the game!")
+
+            break
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-                
-    # After the loop release the cap object
+
     cap.release()
-    # Destroy all the windows
     cv2.destroyAllWindows()
 
-    # return user_choice
-
-
-def get_user_choice():
-    user_choice = get_prediction()
-    if user_choice == 0:
-        print("You chose rock!")
-    if user_choice == 1:
-        print("You chose paper!")
-    if user_choice == 2:
-        print("You chose scissors!")
-    if user_choice == 3:
-        print("There is no user choice detected")
-    # return user_choice
-
-
-    return get_prediction()
-
-def get_computer_choice():
-    choice_list = ['rock', 'paper', 'scissors']                             #While this code was working well when the choice_list was outside the function as a globla variable, based on feedback I placed it insie the function here and again in get_user_choice which is not taking any parameters
-    comp_choice = random.choice(choice_list)
-    print(f'Computer choice is {comp_choice}')
-    return comp_choice
-
-def get_winner(comp_choice, user_choice):                                  #Function with rules of rock paper scissors
-    if comp_choice == user_choice =='rock':
-        print("It's a tie!")
-    elif (comp_choice == 'rock' and user_choice == 2) or (comp_choice == 'paper' and user_choice == 0) or (comp_choice == 'scissors' and user_choice == 1):
-        print("You lost!")
-    else:
-        print("You win!")
-
-def play():                                                                 #Final fucntion wrapping previous fucntions togther- functions are assigned the variables as per get_winner arguments
-    user_choice = get_user_choice()
-    comp_choice = get_computer_choice()
-    get_winner(comp_choice, user_choice)
-
-
-# start = time.time()
-# get_prediction()
-# end = time.time()
-# print(f"time taken to run get_predection function is {end - start}")
-
-play()
-
-    
-# print(get_prediction())
-
-
+play_game()
